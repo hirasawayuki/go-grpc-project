@@ -11,6 +11,7 @@ import (
 
 type Server struct {
 	H db.Handler
+	pb.UnimplementedProductServiceServer
 }
 
 func (s *Server) CreateProduct(ctx context.Context, req *pb.CreateProductRequest) (*pb.CreateProductResponse, error) {
