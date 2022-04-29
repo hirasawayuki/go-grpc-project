@@ -8,6 +8,12 @@ services:
   auth:
     build:
       context: ./go-grpc-auth-svc
+  product:
+    build:
+      context: ./go-grpc-product-svc
+  echo:
+    build:
+      context: ./go-grpc-echo-svc
   db:
     image: mysql:5.7
     volumes:
