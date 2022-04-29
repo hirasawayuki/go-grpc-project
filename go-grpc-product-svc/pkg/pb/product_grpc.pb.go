@@ -24,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type ProductServiceClient interface {
 	CreateProduct(ctx context.Context, in *CreateProductRequest, opts ...grpc.CallOption) (*CreateProductResponse, error)
 	FindOne(ctx context.Context, in *FindOneRequest, opts ...grpc.CallOption) (*FindOneResponse, error)
-	DecreaseStock(ctx context.Context, in *DecreaseStockRequest, opts ...grpc.CallOption) (*DecreaseStockRequest, error)
+	DecreaseStock(ctx context.Context, in *DecreaseStockRequest, opts ...grpc.CallOption) (*DecreaseStockResponse, error)
 }
 
 type productServiceClient struct {
@@ -53,8 +53,8 @@ func (c *productServiceClient) FindOne(ctx context.Context, in *FindOneRequest, 
 	return out, nil
 }
 
-func (c *productServiceClient) DecreaseStock(ctx context.Context, in *DecreaseStockRequest, opts ...grpc.CallOption) (*DecreaseStockRequest, error) {
-	out := new(DecreaseStockRequest)
+func (c *productServiceClient) DecreaseStock(ctx context.Context, in *DecreaseStockRequest, opts ...grpc.CallOption) (*DecreaseStockResponse, error) {
+	out := new(DecreaseStockResponse)
 	err := c.cc.Invoke(ctx, "/product.ProductService/DecreaseStock", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -68,7 +68,7 @@ func (c *productServiceClient) DecreaseStock(ctx context.Context, in *DecreaseSt
 type ProductServiceServer interface {
 	CreateProduct(context.Context, *CreateProductRequest) (*CreateProductResponse, error)
 	FindOne(context.Context, *FindOneRequest) (*FindOneResponse, error)
-	DecreaseStock(context.Context, *DecreaseStockRequest) (*DecreaseStockRequest, error)
+	DecreaseStock(context.Context, *DecreaseStockRequest) (*DecreaseStockResponse, error)
 	mustEmbedUnimplementedProductServiceServer()
 }
 
@@ -82,7 +82,7 @@ func (UnimplementedProductServiceServer) CreateProduct(context.Context, *CreateP
 func (UnimplementedProductServiceServer) FindOne(context.Context, *FindOneRequest) (*FindOneResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindOne not implemented")
 }
-func (UnimplementedProductServiceServer) DecreaseStock(context.Context, *DecreaseStockRequest) (*DecreaseStockRequest, error) {
+func (UnimplementedProductServiceServer) DecreaseStock(context.Context, *DecreaseStockRequest) (*DecreaseStockResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DecreaseStock not implemented")
 }
 func (UnimplementedProductServiceServer) mustEmbedUnimplementedProductServiceServer() {}
