@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"strings"
 
@@ -18,14 +19,16 @@ func InitAuthMiddleware(svc *ServiceClient) AuthMiddlewareConfig {
 }
 
 func (c *AuthMiddlewareConfig) AuthRequired(ctx *gin.Context) {
-	authorization := ctx.Request.Header.Get("authorization")
+	authorization := ctx.Request.Header.Get("Authorization")
 	if authorization == "" {
+		log.Println("authorization header is empty.")
 		ctx.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
 
 	token := strings.Split(authorization, "Bearer ")
 	if len(token) < 2 {
+		log.Println("invalid authorization header.")
 		ctx.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
@@ -34,6 +37,7 @@ func (c *AuthMiddlewareConfig) AuthRequired(ctx *gin.Context) {
 		Token: token[1],
 	})
 	if err != nil || res.Status != http.StatusOK {
+		log.Println("bad status")
 		ctx.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
