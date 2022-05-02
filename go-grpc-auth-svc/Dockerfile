@@ -5,10 +5,8 @@ WORKDIR ${ROOT}
 
 COPY go.mod ./
 COPY go.sum ./
-RUN go mod download
 COPY ./ ./
-
 RUN go mod download
+EXPOSE 3000
 
-RUN go build cmd/main.go
-CMD [ "./main" ]
+CMD [ "go", "run", "cmd/main.go" ]

@@ -11,6 +11,9 @@ services:
   product:
     build:
       context: ./go-grpc-product-svc
+  order:
+    build:
+      context: ./go-grpc-order-svc
   echo:
     build:
       context: ./go-grpc-echo-svc
