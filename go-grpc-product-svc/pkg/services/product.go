@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"log"
 	"net/http"
 
 	"github.com/hirasawayuki/go-grpc-project/go-grpc-product-svc/pkg/db"
@@ -15,6 +16,7 @@ type Server struct {
 }
 
 func (s *Server) CreateProduct(ctx context.Context, req *pb.CreateProductRequest) (*pb.CreateProductResponse, error) {
+	log.Println("product_svc: create product")
 	var product models.Product
 	product.Name = req.Name
 	product.Stock = req.Stock
@@ -34,6 +36,7 @@ func (s *Server) CreateProduct(ctx context.Context, req *pb.CreateProductRequest
 }
 
 func (s *Server) FindOne(ctx context.Context, req *pb.FindOneRequest) (*pb.FindOneResponse, error) {
+	log.Println("product_svc: find one")
 	var product models.Product
 
 	if result := s.H.DB.First(&product, req.Id); result.Error != nil {
@@ -57,6 +60,7 @@ func (s *Server) FindOne(ctx context.Context, req *pb.FindOneRequest) (*pb.FindO
 }
 
 func (s *Server) DecreaseStock(ctx context.Context, req *pb.DecreaseStockRequest) (*pb.DecreaseStockResponse, error) {
+	log.Println("product_svc: decrease stock")
 	var product models.Product
 
 	if result := s.H.DB.First(&product, req.Id); result.Error != nil {
