@@ -1,11 +1,24 @@
 # go-grpc-project
-Learn the basics of　gRPC with Go.
+Learn the basics of gRPC with Go.
 
 ## usage
 
+build image
 ```
 $ docker-compose build .
+```
+
+setup DB
+```
 $ docker-compose up -d db
+$ mysql -h {db_host}:{db_port} -u root -p {password}
+> create database product_svc;
+> create database auth_svc;
+> create database order_svc;
+```
+
+start micro services
+```
 $ docker-compose up -d
 ```
 
